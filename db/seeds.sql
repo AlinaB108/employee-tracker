@@ -21,15 +21,15 @@ VALUES ("Lead engineer", 180000, 1),
        ("Production assistant", 100000, 6);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ("Chris", "Evans", 1, 1),
+VALUES ("Chris", "Evans", 1, NULL),
        ("Chris", "Hemsworth", 2, 1),
-       ("Chris", "Pine", 3, 3),
+       ("Chris", "Pine", 3, NULL),
        ("Chris", "Pratt", 4, 3),
-       ("Chris", "Rock", 5, 5),
+       ("Chris", "Rock", 5, NULL),
        ("Chris", "Tucker", 6, 5),
-       ("Christina", "Ricci", 7, 7),
+       ("Christina", "Ricci", 7, NULL),
        ("Christina", "Aguilera", 8, 7),
-       ("Christina", "Applegate", 9, 9),
+       ("Christina", "Applegate", 9, NULL),
        ("Christina", "Milian", 10, 9),
-       ("Christopher", "Lloyd", 11, 11),
+       ("Christopher", "Lloyd", 11, NULL),
        ("Kirsten", "Dunst", 12, 11);
