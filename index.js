@@ -1,7 +1,7 @@
 const inquirer = require("inquirer");
 // const mysql = require("mysql2");
 const db = require('./db/connection');
-const { viewDept, viewRoles, viewEmployees } =  require('./db/index');
+const { viewDept, viewRoles, viewEmployees, addDept } =  require('./db/index');
 
 // Starting the server
 db.connect(err => {
@@ -31,23 +31,19 @@ function init() {
   .then((answers) => {
     switch (answers.questions) {
       case 'View all departments':
-        viewDept();
-        setTimeout(init, 1000);
+        viewDept(init);
         break;
-      // case 'Add a department':
-      //   addDept();
-      //   setTimeout(init, 1000);
-      //   break;
+      case 'Add a department':
+        addDept(init);
+        break;
       case "View all roles":
-        viewRoles();
-        setTimeout(init, 1000);
+        viewRoles(init);
         break;
       // case "Add a role":
       //   addRole();
       //   break;
       case "View all employees":
-        viewEmployees();
-        setTimeout(init, 1000);
+        viewEmployees(init);
         break;
       // case "Add an employee":
       //   addEmployee();
@@ -55,16 +51,13 @@ function init() {
       // case "Update an employee role":
       //   updateEmployee();
       //   break;
-      // case "Quit":
-      //   // connection.end();
-      //   console.log("Goodbye!");
-      //   break;
+      case "Quit":
+        // connection.end();
+        console.log("Goodbye!");
+        break;
     }
   });
 };
 
 // Function call to initialize app (need to check how to slow it down)
-// init();
-setTimeout(init, 1000);
-
-
+init();
