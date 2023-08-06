@@ -1,7 +1,7 @@
 const inquirer = require("inquirer");
 // const mysql = require("mysql2");
 const db = require('./db/connection');
-const { viewDept } =  require('./db/index');
+const { viewDept, viewRoles, viewEmployees } =  require('./db/index');
 
 // Starting the server
 db.connect(err => {
@@ -14,6 +14,7 @@ function init() {
     {
       name: 'questions',
       type: 'list',
+      loop: false,
       message: 'What would you like to do?',
       choices: [
         'View all departments',
@@ -27,23 +28,27 @@ function init() {
       ]
     },
   )
-  .then( function (answers) {
+  .then((answers) => {
     switch (answers.questions) {
       case 'View all departments':
         viewDept();
+        setTimeout(init, 1000);
         break;
-      // case "Add a department":
+      // case 'Add a department':
       //   addDept();
+      //   setTimeout(init, 1000);
       //   break;
-      // case "View all roles":
-      //   viewRoles();
-      //   break;
+      case "View all roles":
+        viewRoles();
+        setTimeout(init, 1000);
+        break;
       // case "Add a role":
       //   addRole();
       //   break;
-      // case "View all employees":
-      //   viewsEmployees();
-      //   break;
+      case "View all employees":
+        viewEmployees();
+        setTimeout(init, 1000);
+        break;
       // case "Add an employee":
       //   addEmployee();
       //   break;

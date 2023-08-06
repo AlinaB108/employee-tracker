@@ -3,6 +3,7 @@ const mysql = require('mysql2')
 // // Connecting to SQL
 // const db = mysql.createConnection(
 //   // Using dotenv to hide a password
+    // host: 'localhost',
 //   process.env.DB_NAME,
 //   process.env.DB_USER,
 //   process.env.DB_PASSWORD,
