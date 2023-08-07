@@ -16,7 +16,7 @@ The employee tracker is a command-line application that allows users to view and
 ## Installation
 Clone the repository.
 ```
-git clone git@github.com:AlinaB108/note-taker.git
+git clone git@github.com:AlinaB108/employee-tracker.git
 ```
 Create package.json:
 ```
@@ -34,9 +34,22 @@ npm i dotenv
 ## Usage
 [Recording of Application](https://watch.screencastify.com/v/vuvBPa0BbFjflOhedIH7)
 
+- Start the server (in my repo it's index.js in a root folder).
+```
+node index.js
+```
+- You will be presented with a list of actions related to employees database. Use up and down arrows to navigate through the list.
+- Press Enter to select one of the actions. Add a department/add a role/add an employee/Update an employee role require user's input.
+
+Example of prompt questions:
+
 ![Screenshot](/assets/images/questions.png)
 
+View all departments table
+
 ![Screenshot](/assets/images/table.png)
+
+View all roles table
 
 ![Screenshot](/assets/images/table2.png)
 
