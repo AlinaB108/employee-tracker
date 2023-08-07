@@ -148,7 +148,65 @@ function addEmployee(init) {
 }
 
 // Update an employee role function
+function updateEmployee(init) {
+  db.query('SELECT * FROM roles', function (err, results) {
+    const roleArrray = results.map(({ title, id }) => ({ 'name': title, 'value': id }))
+    if (err) throw err;
 
+  db.query('SELECT * FROM employee', function (err, results) {
+    const employeeArrray = results.map(({ first_name, last_name, id }) => ({ 'name': first_name + " " + last_name, 'value': id }))
+    const managerArray = results.map(({ first_name, last_name, id }) => ({ 'name': first_name + " " + last_name, 'value': id }))
+      managerArray.push('null')
+      if (err) throw err;
+      let questions = [
+        {
+          type: 'list',
+          name: 'employee',
+          message: `Select the employee whose information you would like to update`,
+          choices: employeeArrray,
+        },
+        {
+          type: 'list',
+          name: 'role',
+          message: `Select the employee's new role`,
+          choices: roleArrray
+        },
+        {
+          type: 'list',
+          name: 'change',
+          message: `Would you like to change the employee's manager?`,
+          choices: ['Yes', 'No']
+        },
+        {
+          type: 'list',
+          name: 'manager',
+          message: `Select a new manager for the employee`,
+          choices: managerArray,
+          when: (answers) => answers.change === 'Yes'
+        },
+      ]
+      inquirer.prompt(questions)
+        .then(function (answers) {
+          if (answers.change === 'No'){
+            db.query('UPDATE employee SET role_id = ? WHERE id = ?', [answers.role, answers.employee], (err, res) => {
+              console.log(`Employee's ID ${answers.employee} updated successfully`);
+              return init();
+            });
+          } 
 
+          if (answers.change ==='Yes') {
+            if (answers.manager === 'null'){
+              answers.manager = null;
+            }
+            db.query('UPDATE employee SET role_id = ?, manager_id = ? WHERE id = ?', [answers.role, answers.manager, answers.employee], (err, res) => {
+              if (err) throw err;
+              console.log(`Employee's ID ${answers.employee} updated successfully`);
+              init();
+            });
+          }
+        })
+    });
+  });
+}
 
-module.exports = { viewDept, viewRoles, viewEmployees, addDept, addRole, addEmployee }
+module.exports = { viewDept, viewRoles, viewEmployees, addDept, addRole, addEmployee, updateEmployee }

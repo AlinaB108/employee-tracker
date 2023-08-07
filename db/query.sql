@@ -19,3 +19,18 @@
 -- LEFT JOIN employee manager ON employee.manager_id = manager.id AND CASE WHEN employee.id != manager.id THEN true ELSE false END
 
 
+-- Added the rest of query to have it in the same file
+
+
+-- Add a department
+-- INSERT INTO department (dept_name) VALUES (?)
+
+-- Add a role
+-- INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?)
+
+-- Add an employee
+-- INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)
+
+-- Update employee role and manager
+-- UPDATE employee SET role_id = ? WHERE id = ?
+-- UPDATE employee SET role_id = ?, manager_id = ? WHERE id = ?
