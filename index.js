@@ -1,6 +1,6 @@
 const inquirer = require("inquirer");
 const db = require('./db/connection');
-const { viewDept, viewRoles, viewEmployees, addDept, addRole } =  require('./db/index');
+const { viewDept, viewRoles, viewEmployees, addDept, addRole, addEmployee } =  require('./db/index');
 
 // Starting the server
 db.connect(err => {
@@ -44,9 +44,9 @@ function init() {
       case "View all employees":
         viewEmployees(init);
         break;
-      // case "Add an employee":
-      //   addEmployee(init);
-      //   break;
+      case "Add an employee":
+        addEmployee(init);
+        break;
       // case "Update an employee role":
       //   updateEmployee();
       //   break;
@@ -58,5 +58,5 @@ function init() {
   });
 };
 
-// Function call to initialize app (need to check how to slow it down)
+// Function call to initialize app
 init();

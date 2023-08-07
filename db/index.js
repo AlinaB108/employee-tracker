@@ -66,8 +66,7 @@ function addDept(init) {
     });
 };
 
-
-// Add employee function
+// Add a role function
 function addRole(init) {
   db.query(`SELECT * FROM department`, function (err, res) {
     const roleArray = res.map(({ dept_name, id }) => ({ 'name': dept_name, 'value': id }))
@@ -75,29 +74,81 @@ function addRole(init) {
       {
         type: 'input',
         name: 'title',
-        message: 'Enter a role name:',
+        message: 'Enter a role name',
       },
       {
         type: 'input',
         name: 'salary',
-        message: 'Enter the salary of the role:',
+        message: 'Enter the salary for the role',
       },
       {
         type: 'list',
         name: 'department',
-        message: 'Select a department that this role belongs to:',
+        message: 'Select a department that this role belongs to',
         choices: roleArray
       }
     ]
     inquirer.prompt(questions)
       .then(function (answers) {
         db.query('INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?)', [answers.title, answers.salary, answers.department], (err, results) => {
-          console.log(`${answers.title} has been added to the roles table.`);
+          console.log(`${answers.title} is added successfully!`);
           init();
         });
       })
   });
 }
 
+// Add an employee function
+function addEmployee(init) {
+  db.query('SELECT * FROM roles', function (err, res) {
+    const roleArray = res.map(({ title, id }) => ({ 'name': title, 'value': id }))
+    if (err) throw err;
 
-module.exports = { viewDept, viewRoles, viewEmployees, addDept, addRole }
+  db.query('SELECT * FROM employee', function (err, res) {
+    const managerArray = res.map(({ first_name, last_name, id }) => ({ 'name': first_name + " " + last_name, 'value': id }))
+    managerArray.push('null')
+    if (err) throw err;
+    let questions = [
+      {
+        type: 'input',
+        name: 'first_name',
+        message: `Enter the employee's first name:`,
+      },
+      {
+        type: 'input',
+        name: 'last_name',
+        message: `Enter the employee's last name:`,
+      },
+      {
+        type: 'list',
+        name: 'role',
+        message: `Select the employee's role`,
+        choices: roleArray
+      },
+      {
+        type: 'list',
+        name: 'manager',
+        message: `Select the manager`,
+        choices: managerArray
+      }
+    ]
+    inquirer.prompt(questions)
+      .then(function (answers) {
+        if (answers.manager === 'null'){
+            answers.manager = null;
+          }
+        db.query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)', [answers.first_name, answers.last_name, answers.role, answers.manager], (err, results) => {
+          if (err) throw err;
+          console.log(`${answers.first_name} ${answers.last_name} is added successfully!`);
+          init();
+        });
+      })
+    });
+  });
+}
+
+// Update an employee role function
+
+
+
+module.exports = { viewDept, viewRoles, viewEmployees, addDept, addRole, addEmployee }
