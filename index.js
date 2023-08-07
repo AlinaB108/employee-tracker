@@ -1,7 +1,6 @@
 const inquirer = require("inquirer");
-// const mysql = require("mysql2");
 const db = require('./db/connection');
-const { viewDept, viewRoles, viewEmployees, addDept } =  require('./db/index');
+const { viewDept, viewRoles, viewEmployees, addDept, addRole } =  require('./db/index');
 
 // Starting the server
 db.connect(err => {
@@ -39,20 +38,20 @@ function init() {
       case "View all roles":
         viewRoles(init);
         break;
-      // case "Add a role":
-      //   addRole();
-      //   break;
+      case "Add a role":
+        addRole(init);
+        break;
       case "View all employees":
         viewEmployees(init);
         break;
       // case "Add an employee":
-      //   addEmployee();
+      //   addEmployee(init);
       //   break;
       // case "Update an employee role":
       //   updateEmployee();
       //   break;
       case "Quit":
-        // connection.end();
+        db.end();
         console.log("Goodbye!");
         break;
     }
